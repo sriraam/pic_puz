@@ -41,8 +41,7 @@ int main(){
 	emptypos.x = 200;
 	emptypos.y = 200;
 	
-	//sf::Text
-
+	
 
 	if (!gridtexture.loadFromFile("grid3.png")){
 		std::cout << "Image not found";
