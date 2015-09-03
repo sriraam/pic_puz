@@ -2,32 +2,36 @@
 #include<SFML\Window.hpp>
 #include<iostream>
 
+int idr = 0, idp = 0, i, j,w=1;
+int id_real[3][3];
+int id_play[3][3];
 
 
-/*void checktile(){
+void check(){
 	for (i = 0; i < 3; i++){
 		for (j = 0; j < 3; j++){
-			if (i != 2 || j != 2){
-				//pic.setPosition(j * 100, j * 100);
-				pic.setTextureRect(sf::IntRect(i * 100, j * 100, 100, 100));
-				repopic[i][j] = pic;
-				repopos[i][j].x = i * 100;
-				repopos[i][j].y = j * 100;
-				emptypos.x = 200;
-				emptypos.y = 200;
+			if (id_real[i][j] == id_play[i][j]){
+				w++;
+				if (w == 9){
+					std::cout << "WINNER";
+
+				}
 			}
+			
 		}
 	}
+	w = 1;
+}
 
-}*/
 int main(){
 	
-
-
-	int i, j,movex,movey,mi,mj;
+	int movex,movey,mi,mj,temp;
+//	int id_r = 0; id_p = 0;
 	sf::Sprite pic;
 	sf::Sprite grid;
 	sf::Sprite empty;
+
+
 	sf::Sprite repopic[3][3];
 	sf::Vector2i repopos[3][3];
 	sf::Texture gridtexture;
@@ -61,13 +65,19 @@ int main(){
 	window.create(sf::VideoMode(300, 300, 32), "PICPUZ");
 	for (i = 0; i < 3; i++){
 		for (j = 0; j < 3; j++){
+			id_real[i][j] = idr;
+			id_play[j][i] = idp;
+		
+			idr++;
+			idp++;
 			if (i != 2 || j != 2){
-				//pic.setPosition(j * 100, j * 100);
-				pic.setTextureRect(sf::IntRect(i * 100, j * 100, 100, 100));
+				
+				
+				pic.setTextureRect(sf::IntRect(j * 100, i * 100, 100, 100));
 				repopic[i][j] = pic;
 				repopos[i][j].x = i * 100;
 				repopos[i][j].y = j * 100;
-								
+				
 			}
 		}
 	}
@@ -97,10 +107,16 @@ int main(){
 					repopic[mi + 1][mj] = repopic[mi][mj];
 					repopic[mi][mj] = empty;
 					emptypos.x = movex;
-					//emptypos.y=mo
+					
+					temp = id_play[mi+1][mj];
+					id_play[mi + 1][mj] = id_play[mi][mj];
+					id_play[mi][mj] = temp;
+					check();
 					std::cout << "emptypos x:" << emptypos.x << std::endl;
 					std::cout << "pic x:" << emptypos.x << std::endl;
 
+					std::cout << "positopn" << id_play[mi + 1][mj] << std::endl;
+				
 					if (emptypos.x == 0){
 						x_right = false;
 					//	x_left = true;
@@ -126,6 +142,13 @@ int main(){
 					repopic[mi - 1][mj] = repopic[mi][mj];
 					repopic[mi][mj] = empty;
 					emptypos.x = movex;
+
+					temp = id_play[mi - 1][mj];
+					id_play[mi - 1][mj] = id_play[mi][mj];
+					id_play[mi][mj] = temp;
+					check();
+
+
 					std::cout << "emptypos x:" << emptypos.x << std::endl;
 					std::cout << "pic x:" << emptypos.x << std::endl;
 					//emptypos.y=mo
@@ -154,6 +177,12 @@ int main(){
 					repopic[mi][mj+1] = repopic[mi][mj];
 					repopic[mi][mj] = empty;
 					emptypos.y = movey;
+
+					temp = id_play[mi][mj+1];
+					id_play[mi][mj+1] = id_play[mi][mj];
+					id_play[mi][mj] = temp;
+					check();
+
 					std::cout << "emptypos x:" << emptypos.y << std::endl;
 					std::cout << "pic x:" << emptypos.y << std::endl;
 					//emptypos.y=mo
@@ -183,6 +212,12 @@ int main(){
 					repopic[mi][mj - 1] = repopic[mi][mj];
 					repopic[mi][mj] = empty;
 					emptypos.y = movey;
+
+					temp = id_play[mi][mj-1];
+					id_play[mi][mj-1] = id_play[mi][mj];
+					id_play[mi][mj] = temp;
+					check();
+
 					std::cout << "emptypos x:" << emptypos.y << std::endl;
 					std::cout << "pic x:" << emptypos.y << std::endl;
 					//emptypos.y=mo
@@ -198,8 +233,6 @@ int main(){
 
 				}
 			}
-
-
 
 			
 		}
