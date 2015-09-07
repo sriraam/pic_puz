@@ -65,19 +65,49 @@ int main(){
 	window.create(sf::VideoMode(300, 300, 32), "PICPUZ");
 	for (i = 0; i < 3; i++){
 		for (j = 0; j < 3; j++){
+
 			id_real[i][j] = idr;
-			id_play[j][i] = idp;
-		
 			idr++;
-			idp++;
+			id_play[2][2] = 8;
 			if (i != 2 || j != 2){
 				
-				
-				pic.setTextureRect(sf::IntRect(j * 100, i * 100, 100, 100));
-				repopic[i][j] = pic;
-				repopos[i][j].x = i * 100;
-				repopos[i][j].y = j * 100;
-				
+				if (i != j){
+					pic.setTextureRect(sf::IntRect(j * 100, i * 100, 100, 100));
+					repopic[i][j] = pic;
+					repopos[i][j].x = i * 100;
+					repopos[i][j].y = j * 100;
+
+					
+					id_play[j][i] = idp;
+
+					idp++;
+				}
+				else if(i==0){
+					pic.setTextureRect(sf::IntRect(0,0, 100, 100));
+					repopic[1][1] = pic;
+					repopos[1][1].x = i * 100;
+					repopos[1][1].y = j * 100;
+
+					id_play[1][1] = idp;
+
+					idp++;
+
+				}
+				else if (i==1)
+				{
+					pic.setTextureRect(sf::IntRect(100,100, 100, 100));
+					repopic[0][0] = pic;
+					repopos[1][1].x = i * 100;
+					repopos[1][1].y = j * 100;
+
+					id_play[0][0] = idp;
+
+					idp++;
+
+				}
+			}
+			else{
+				pic.setTextureRect(sf::IntRect(200, 200, 100, 100));
 			}
 		}
 	}
